@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom' xmlns:blogger='http://schemas.google.com/blogger/2018'>
+  <id>tag:blogger.com,1999:blog-5024057566377310186</id>
+  <title>Shep's IT Solutions</title>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-578270130767790176</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-8722959420389440751</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-2277178394949892690</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>From what I can tell, the photos are not accessible via any of the APIs. I was just comparing an article from a 3rd party that integrates with UKG the same way I have used the Report-as-a-Service API in one of my two posts. They do no show a way to pull images. But they do specifically mention support for HRMS platforms that allow that (e.g. ADP, Bamboo, PeopleHR). It just seems this isn&amp;#39;t something UltiPro/UKG supports. Sorry.</content>
+    <blogger:created>2021-11-19T16:33:15.054Z</blogger:created>
+    <published>2021-11-19T16:33:15.054Z</published>
+    <updated>2021-11-19T16:33:15.054Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-999494913276237906</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-8722959420389440751</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-483592723682815787</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>It’s in the guide under Requirements. APIs vary depending if you use the CSV method or the Report as a Service method. Two separate articles.</content>
+    <blogger:created>2021-11-12T22:22:32Z</blogger:created>
+    <published>2021-11-12T22:22:32Z</published>
+    <updated>2021-11-12T22:22:32Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-1044776457825133590</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-684621804830485618</blogger:parent>
+    <blogger:inReplyTo/>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>Looks like you have an extra &amp;quot;#&amp;quot;. You have $retrieveReportURL = $streamingserviceUrl# + &amp;#39;?EmploymentStatus=A&amp;#39;. It should be $retrieveReportURL = $streamingserviceUrl + &amp;#39;?EmploymentStatus=A&amp;#39;. Take a look at the source script again. Hope that helps.</content>
+    <blogger:created>2022-10-04T23:04:12.226Z</blogger:created>
+    <published>2022-10-04T23:04:12.226Z</published>
+    <updated>2022-10-04T23:04:12.226Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-1356373547129974988</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-8642888378715557000</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-4716550847214827748</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>Good tool. Thanks for pointing that out. I&amp;#39;d like to point out a few things. The overall objective was to use ConfigMgr for the deployment as a standing advertisement (still working on that). You could certainly export your list of systems from ConfigMgr and import into the SolarWinds tool. Also, this PowerShell method could be used to enable ANY Windows feature. SNMP just happened to be what I was working on at the time. Thanks again!</content>
+    <blogger:created>2012-05-30T02:27:25.886Z</blogger:created>
+    <published>2012-05-30T02:27:25.886Z</published>
+    <updated>2012-05-30T02:27:25.886Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-3481286376855111318</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-5454683373499420501</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-5322454739855118027</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>I don&amp;#39;t believe so. The OU should be an attribute automatically captured by SCOM. Unfortunately, I&amp;#39;m at a new company where I don&amp;#39;t have SCOM so I can&amp;#39;t validate that for you. Should be very easy to test though.</content>
+    <blogger:created>2012-09-17T03:06:58.374Z</blogger:created>
+    <published>2012-09-17T03:06:58.374Z</published>
+    <updated>2012-09-17T03:06:58.374Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-3735690519608918764</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-8642888378715557000</blogger:parent>
+    <blogger:inReplyTo/>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>Try using group policy preferences to set the startup type and start the service.</content>
+    <blogger:created>2015-04-23T04:08:42.859Z</blogger:created>
+    <published>2015-04-23T04:08:42.859Z</published>
+    <updated>2015-04-23T04:08:42.859Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-4057790672071813435</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-6969841794782629167</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-4684656731434729057</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>Problem: The script runs, finishes, and the value in memory is lost. The value reported back to SCOM is stored but the monitor type “Timed Script Two State Monitor” doesn’t support samples. Just a timer. So I think of this as a yes/no sort of monitor. You’re healthy or you’re not.
+
+WQL doesn&amp;#39;t support arithmetic so you can&amp;#39;t use a sampling monitor type (hence the script).
+
+I will tell you that I learned this is a noisy monitor. Little spikes in memory will cause a steady stream of alerts if your threshold is too low or something. A few thoughts…
+
+1. You could use the native Available Megabytes monitors and just put overrides. You could get really “clever” and build overrides based on groups. i.e. “Servers w/ 4GB” or “Servers w/ 8GB” then calculate what 10% of that is and set it as an override on the group. Your group membership being some dynamic query for systems with X megabytes physical memory installed. Not sure how to do that but it’s an idea.
+
+2. It’s possible the SCOM authoring tools have some means of creating a custom monitor type that is a script executed over multiple samples. Not sure.
+
+3. Use some combination of this monitor and an event monitor potentially...Monitor A tracks % and if over 90% generate a warning (two state). At the end of the script have it log something to the event viewer. Monitor B is a Repeated Event Detection monitor on a timer. if it sees X number of the same event in some time span generate a critical alert. Just as noisy in terms of # of alerts. But saves you going into critical right away.
+
+I don&amp;#39;t have a good answer unfortunately. I&amp;#39;m open to suggestions.</content>
+    <blogger:created>2014-07-17T22:23:08.648Z</blogger:created>
+    <published>2014-07-17T22:23:08.648Z</published>
+    <updated>2014-07-17T22:23:08.648Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-4627777076153085084</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-684621804830485618</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-7545277400635715852</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>Glad it helped. This is what it&amp;#39;s all about.</content>
+    <blogger:created>2021-03-25T18:20:32.870Z</blogger:created>
+    <published>2021-03-25T18:20:32.870Z</published>
+    <updated>2021-03-25T18:20:32.870Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-5214512905423801808</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-5454683373499420501</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-8471457631461631802</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>I don&amp;#39;t recall exactly why I had the &amp;quot;I*&amp;quot; in there. Could have been a fat finger or a legitimate reason at the time (3 years ago). I just tested it again. As you described, value = * works just fine. Glad it helped you out!</content>
+    <blogger:created>2015-08-12T17:01:40.586Z</blogger:created>
+    <published>2015-08-12T17:01:40.586Z</published>
+    <updated>2015-08-12T17:01:40.586Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-6951370001788399315</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-6969841794782629167</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-7115656753918185307</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>Always be careful copying scripts down. I tested copying from this paged into notepad. I tried to save and got this....
+
+&amp;quot;This file contains characters in Unicode format which will be lost if you save this file as an ANSI encoded text file. To keep the Unicode information, click Cancel below and then select one of the Unicode options from the Encoding drop down list. Continue?&amp;quot;
+
+If I say OK, close and reopen the script is fine. It drops the Unicode junk. You can test this script manually on any server pretty easily. Just add these lines to it to see what the oBag is returning to SCOM. Put them right between the last &amp;quot;Next&amp;quot; and &amp;quot;Call oBag.AddValue(&amp;quot;Percent&amp;quot;,mempercent).
+
+WScript.Echo &amp;quot;Percent: &amp;quot; _
+&amp;amp; mempercent
+
+This will output the value currently stored in the variable to the screen for you to validate.
+
+</content>
+    <blogger:created>2014-04-15T16:57:07.042Z</blogger:created>
+    <published>2014-04-15T16:57:07.042Z</published>
+    <updated>2014-04-15T16:57:07.042Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-7294159144154151874</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-8642888378715557000</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-4716550847214827748</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>True, but I believe once you get the features enabled you can just use group policy to enforce strings and trap servers. Under Computer\Policies\Admin Templates\Network\SNMP. This, to me, would be the preferred method anyway.</content>
+    <blogger:created>2012-12-20T19:44:55.855Z</blogger:created>
+    <published>2012-12-20T19:44:55.855Z</published>
+    <updated>2012-12-20T19:44:55.855Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-8094337288004372218</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-8722959420389440751</blogger:parent>
+    <blogger:inReplyTo>tag:blogger.com,1999:blog-5024057566377310186.post-5811368221830693951</blogger:inReplyTo>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>It&amp;#39;s a little ironic, given the detail here, but I have zero access to our UltiPro environment. I just wrote the integration. I can tell you that employeeNumber and employeeID are both native to the &amp;quot;Employee Changes&amp;quot; API. I will encourage you to wait for my next post. I&amp;#39;m working on a v2 of the automation. We identified some fields that were not available via the base APIs. Instead we had to use the Report-as-a-Service API (where HR authors custom tables via Cognos analytics).</content>
+    <blogger:created>2021-03-10T15:15:59.109Z</blogger:created>
+    <published>2021-03-10T15:15:59.109Z</published>
+    <updated>2021-03-10T15:15:59.109Z</updated>
+    <blogger:trashed/>
+  </entry>
+  <entry>
+    <id>tag:blogger.com,1999:blog-5024057566377310186.post-8647559346527114374</id>
+    <blogger:parent>tag:blogger.com,1999:blog-5024057566377310186.post-5440477488445561192</blogger:parent>
+    <blogger:inReplyTo/>
+    <blogger:type>COMMENT</blogger:type>
+    <blogger:status>LIVE</blogger:status>
+    <author>
+      <name>00Shep</name>
+      <uri></uri>
+      <blogger:type>BLOGGER</blogger:type>
+    </author>
+    <content type='html'>Unfortunately, I do not have left hand at my current employer so I have gotten away from troubleshooting this one. At a minimum I plan to leave this post up so people will at least know there is an issue. If anyone finds a solution with HP I hope they have time to leave a comment.</content>
+    <blogger:created>2013-03-20T05:02:23.443Z</blogger:created>
+    <published>2013-03-20T05:02:23.443Z</published>
+    <updated>2013-03-20T05:02:23.443Z</updated>
+    <blogger:trashed/>
+  </entry>
+</feed>
