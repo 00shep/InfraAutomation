@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UKG Pro RaaS + SQL Sync — Implementation Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --ground: #FAFAFA;
+  --text-primary: #0F1419;
+  --text-secondary: #5F6B7A;
+  --accent: #0A7EA4;
+  --accent-soft: #5BA8C4;
+  --accent-pale: #E8F4F8;
+  --border: #E1E4E8;
+  --card-bg: #FFFFFF;
+  --code-bg: #F5F7FA;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0F1419;
+    --text-primary: #F0F2F5;
+    --text-secondary: #9BA3AE;
+    --accent: #3DA5C8;
+    --accent-soft: #5BA8C4;
+    --accent-pale: #1A2A35;
+    --border: #2A3441;
+    --card-bg: #1A2332;
+    --code-bg: #0A0E13;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground: #0F1419;
+  --text-primary: #F0F2F5;
+  --text-secondary: #9BA3AE;
+  --accent: #3DA5C8;
+  --accent-soft: #5BA8C4;
+  --accent-pale: #1A2A35;
+  --border: #2A3441;
+  --card-bg: #1A2332;
+  --code-bg: #0A0E13;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--ground);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding: 40px 24px 80px;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+header {
+  position: sticky;
+  top: 0;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--ground);
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+.cta-button {
+  background: var(--accent);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.cta-button:hover {
+  opacity: 0.9;
+  color: white;
+}
+
+.article-header {
+  margin: 40px 0;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.subhead {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+.progress-dot {
+  height: 4px;
+  flex: 1;
+  background: var(--border);
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+
+.progress-dot.active { background: var(--accent); }
+
+.workflow {
+  display: grid;
+  grid-template-columns: 140px repeat(9, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: var(--card-bg);
+}
+
+.lane-label {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border-right: 1px solid var(--border);
+  background: var(--ground);
+}
+
+.lane-1-label { grid-column: 1; grid-row: 1; border-bottom: 1px solid var(--border); }
+.lane-2-label { grid-column: 1; grid-row: 2; }
+
+.step-cell {
+  padding: 12px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  border-right: 1px solid var(--border);
+}
+
+.step-cell:last-child { border-right: none; }
+.lane-1-cell { grid-row: 1; border-bottom: 1px solid var(--border); }
+.lane-2-cell { grid-row: 2; }
+
+.step-card {
+  width: 100%;
+  height: 88px;
+  background: var(--ground);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.step-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.step-card.active {
+  background: var(--accent-pale);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(10,126,164,0.15);
+}
+
+.step-card.done {
+  border-color: var(--accent-soft);
+  opacity: 0.7;
+}
+
+.step-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+
+.step-card.active .step-num { color: var(--accent); }
+
+.step-title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.empty-cell { background: transparent; }
+
+.handoff {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.detail-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  min-height: 400px;
+}
+
+.panel-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.owner-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-left: 12px;
+  letter-spacing: 0.03em;
+}
+
+.owner-infrastructure {
+  background: var(--accent-pale);
+  color: var(--accent);
+}
+
+.owner-hr {
+  background: #FFF4E6;
+  color: #E67E22;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .owner-hr {
+    background: rgba(230,126,34,0.15);
+    color: #F39C12;
+  }
+}
+
+:root[data-theme="dark"] .owner-hr {
+  background: rgba(230,126,34,0.15);
+  color: #F39C12;
+}
+
+.panel-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+
+.panel-desc {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  max-width: 720px;
+}
+
+.panel-desc b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.step-list {
+  list-style: none;
+  margin: 0 0 24px 0;
+  padding: 0;
+  max-width: 720px;
+}
+
+.step-list li {
+  padding-left: 24px;
+  position: relative;
+  margin-bottom: 8px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.step-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.note {
+  background: var(--accent-pale);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 720px;
+}
+
+.code-block {
+  margin-bottom: 16px;
+  max-width: 800px;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.code-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.copy-btn {
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--ground);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.copy-btn.copied {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: var(--text-primary);
+}
+
+.step-image {
+  margin: 24px 0;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.step-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-caption {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--ground);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.footer-note {
+  margin-top: 32px;
+  padding: 16px;
+  background: var(--accent-pale);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.footer-note b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .workflow {
+    grid-template-columns: 100px repeat(9, 1fr);
+  }
+  .step-title { font-size: 12px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="header-content">
+      <a href="../index.html" class="logo">00Shep</a>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="../index.html#expertise">Expertise</a>
+        <a href="../blog.html">Articles</a>
+        <a href="https://github.com/00shep/InfraAutomation">GitHub</a>
+        <a href="../index.html#contact" class="cta-button">Get in Touch</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="article-header">
+    <div class="eyebrow">Implementation Guide · UKG Pro Integration</div>
+    <h1>Report-as-a-Service Method — SQL Direct Import</h1>
+    <div class="subhead">9-step workflow · SOAP API · 5-10min runtime vs 20-30min REST · SQL Server integration</div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="workflow" id="workflow"></div>
+  <div class="detail-panel" id="panel"></div>
+
+  <div class="footer-note">
+    <b>Why RaaS over REST:</b> Much faster for large datasets (session-based streaming vs paginated REST). HR staff author reports in Cognos Analytics — more flexible than hardcoded API endpoints. SQL import enables downstream automation (SSIS, stored procs, views). Trade-off: more setup complexity (SQL schema, stored procedures, table types). <br><br>
+    <b>Simpler Alternative:</b> For smaller environments or quick setup, use the <a href="ultipro-rest-api.html" style="color: var(--accent); font-weight: 600;">REST API method</a> — less infrastructure, CSV export instead of SQL.
+  </div>
+</div>
+
+<script>
+const steps = [
+  {
+    lane: 2,
+    label: "Create Cognos Report",
+    eyebrow: "Step 01 · Report Setup",
+    owner: "HR Admin",
+    title: "Build custom employee export in Cognos Analytics",
+    desc: "HR staff create a report with the exact fields needed. Report name is <b>case-sensitive</b> — the runbook references it by exact name.",
+    list: [
+      "Log into UKG Pro → Reports → Cognos Analytics",
+      "Create new report: Employee Data Export",
+      "Add columns: FirstName, MiddleName, LastName, WorkPhone, HomePhone, Address, City, State, Zip",
+      "Add org fields: OrgLevel1Code, OrgLevel2, OrgLevel2Code, OrgLevel3Code",
+      "Add employment fields: Title, Company, EmployeeNumber, EmployeeStatus, EmployeeNumberSupervisor",
+      "Filter: EmployeeStatus = 'A' (active only)",
+      "Save as: <b>AD Sync Report</b>"
+    ],
+    note: "Column order doesn't matter — PowerShell maps by name. But spelling must match exactly: 'EmployeeNumber' not 'Employee_Number'."
+  },
+  {
+    lane: 2,
+    label: "Get RaaS Credentials",
+    eyebrow: "Step 02 · API Access",
+    owner: "HR Admin",
+    title: "Obtain Report-as-a-Service API keys",
+    desc: "RaaS uses <b>different credentials</b> than the REST API. You need ClientAccessKey, UserAccessKey, and a service account.",
+    list: [
+      "UKG Pro Admin Portal → System Configuration → Security → Web Services",
+      "Generate Report-as-a-Service API keys (not REST keys)",
+      "Note the Data Service URL (e.g., https://service5.ultipro.com/services/BIDataService)",
+      "Note the Streaming Service URL (e.g., https://service5.ultipro.com/services/BiStreamService)",
+      "Create service account with Report Viewer permissions"
+    ],
+    note: null
+  },
+  {
+    lane: 1,
+    label: "Create SQL Tables",
+    eyebrow: "Step 03 · Database Schema",
+    owner: "Infrastructure",
+    title: "Set up SQL Server tables and types",
+    desc: "Create two tables: one for UKG Pro employee data, one for AD manager distinguished names. Table types enable bulk import via stored procedures.",
+    code: [
+      { label: "Create tables and table types", cmd: "-- Table 1: UKG Pro employee data\nCREATE TABLE dbo.UltiProEmployees (\n    givenName NVARCHAR(50),\n    middleName NVARCHAR(1),\n    lastName NVARCHAR(50),\n    telephoneNumber NVARCHAR(20),\n    homePhone NVARCHAR(20),\n    streetAddress NVARCHAR(100),\n    city NVARCHAR(50),\n    state NVARCHAR(2),\n    postalCode NVARCHAR(10),\n    department NVARCHAR(100),\n    Title NVARCHAR(100),\n    company NVARCHAR(100),\n    employeeID NVARCHAR(20),\n    division NVARCHAR(50),\n    orglevel2code NVARCHAR(20),\n    orglevel3code NVARCHAR(20),\n    employeeStatusCode NVARCHAR(10),\n    ManagerEmployeeID NVARCHAR(20)\n)\nGO\n\n-- Table 2: AD manager distinguished names\nCREATE TABLE dbo.ADDistinguishedNames (\n    employeeID NVARCHAR(20),\n    distName NVARCHAR(500)\n)\nGO\n\n-- Table type for bulk import\nCREATE TYPE [dbo].[ADSyncTableType] AS TABLE (\n    givenName NVARCHAR(50),\n    /* ... same schema as UltiProEmployees ... */\n)\nGO\n\nCREATE TYPE [dbo].[ADDistTableType] AS TABLE (\n    employeeID NVARCHAR(20),\n    distName NVARCHAR(500)\n)\nGO" }
+    ],
+    note: "Full schema available at: https://github.com/00shep/InfraAutomation/tree/main/08-UltiPro"
+  },
+  {
+    lane: 1,
+    label: "Create Stored Procs",
+    eyebrow: "Step 04 · SQL Logic",
+    owner: "Infrastructure",
+    title: "Build stored procedures for bulk inserts",
+    desc: "Two stored procedures: one truncates and reloads UltiProEmployees, the other refreshes ADDistinguishedNames. Both accept table-valued parameters.",
+    code: [
+      { label: "Stored procedures", cmd: "CREATE PROCEDURE dbo.ADSync_InsertAll\n    @ADSyncT [ADSyncTableType] READONLY\nAS\nBEGIN\n    SET NOCOUNT ON;\n    TRUNCATE TABLE dbo.UltiProEmployees;\n    INSERT INTO dbo.UltiProEmployees\n    SELECT * FROM @ADSyncT;\nEND\nGO\n\nCREATE PROCEDURE dbo.ADDist_InsertAll\n    @ADDistT [ADDistTableType] READONLY\nAS\nBEGIN\n    SET NOCOUNT ON;\n    TRUNCATE TABLE dbo.ADDistinguishedNames;\n    INSERT INTO dbo.ADDistinguishedNames\n    SELECT * FROM @ADDistT;\nEND\nGO" }
+    ],
+    note: "TRUNCATE + INSERT is faster than DELETE + INSERT for full refreshes. If you need incremental updates, switch to MERGE statements."
+  },
+  {
+    lane: 1,
+    label: "Create SQL View",
+    eyebrow: "Step 05 · Data Access",
+    owner: "Infrastructure",
+    title: "Join UltiPro data with manager DNs",
+    desc: "ManageEngine ADManager (or other sync tools) consume this view. It combines employee data with manager distinguished names for AD attribute updates.",
+    code: [
+      { label: "Create view", cmd: "CREATE VIEW dbo.vw_EmployeeSync AS\nSELECT \n    e.givenName,\n    e.middleName,\n    e.lastName,\n    e.telephoneNumber,\n    e.homePhone,\n    e.streetAddress,\n    e.city,\n    e.state,\n    e.postalCode,\n    e.department,\n    e.Title,\n    e.company,\n    e.employeeID,\n    e.division,\n    e.orglevel2code,\n    e.orglevel3code,\n    e.employeeStatusCode,\n    ad.distName AS ManagerDN\nFROM dbo.UltiProEmployees e\nLEFT JOIN dbo.ADDistinguishedNames ad\n    ON e.ManagerEmployeeID = ad.employeeID\nGO" }
+    ],
+    images: [
+      { src: "../08-UltiPro/images/ManageEngine_Automation.png", caption: "ManageEngine ADManager consuming the SQL view for AD sync automation" }
+    ],
+    note: null
+  },
+  {
+    lane: 1,
+    label: "Configure Azure Automation",
+    eyebrow: "Step 06 · Automation Setup",
+    owner: "Infrastructure",
+    title: "Add RaaS credentials and variables to Azure",
+    desc: "Store the RaaS-specific credentials and service URLs as automation assets.",
+    code: [
+      { label: "Azure Automation configuration", cmd: "# Credentials:\n1. UltiPro Web API User\n   Username: <service account username>\n   Password: <service account password>\n\n# Variables:\n1. UltiPro Data Service URL\n   Value: https://service5.ultipro.com/services/BIDataService\n\n2. UltiPro Streaming Service URL\n   Value: https://service5.ultipro.com/services/BiStreamService\n\n3. UltiPro ClientAccessKey\n   Value: <from Step 02>\n   Encrypted: Yes\n\n4. UltiPro UserAccessKey\n   Value: <from Step 02>\n   Encrypted: Yes\n\n5. UltiPro Report Name\n   Value: AD Sync Report\n   (case-sensitive, must match Cognos report name exactly)" }
+    ],
+    note: "Update the SQL connection string in the script (lines ~341 and ~402) to point to your SQL Server instance."
+  },
+  {
+    lane: 1,
+    label: "Create Runbook",
+    eyebrow: "Step 07 · RaaS Workflow",
+    owner: "Infrastructure",
+    title: "Upload RaaS PowerShell runbook",
+    desc: "The runbook executes the 5-step RaaS API flow: LogOn → GetReportList → ExecuteReport → RetrieveReport → LogOff. Base64-decode the stream, import to SQL.",
+    list: [
+      "Azure Automation → Runbooks → Import a runbook",
+      "Upload: Sync-UltiProToAD-RaaS-SQL.ps1",
+      "Update SQL connection string (2 places): lines ~341 and ~402",
+      "Replace SERVERNAMEHERE with your SQL Server instance",
+      "Publish the runbook"
+    ],
+    code: null,
+    images: [
+      { src: "../08-UltiPro/images/PowerShell_Runbook.png", caption: "PowerShell runbook configured in Azure Automation with Hybrid Worker assignment" }
+    ],
+    note: "The 5-step API sequence is mandatory — skipping any step breaks the session. Don't skip GetReportList even if you know the report name — it validates the session."
+  },
+  {
+    lane: 1,
+    label: "Test The Sync",
+    eyebrow: "Step 08 · Validation",
+    owner: "Infrastructure",
+    title: "Run the runbook and verify SQL import",
+    desc: "Execute a test run and confirm data lands in SQL Server. Check row counts, spot-check manager DNs, verify the view is queryable.",
+    code: [
+      { label: "Test execution", cmd: "# In Azure Portal:\nAutomation Account → Runbooks → Sync-UltiProToAD-RaaS-SQL → Test pane\n→ Select Hybrid Worker group\n→ Start\n\n# Check output stream:\nSession ID: <guid>\nReports Found: <N>\nReportKey: <guid>\nDiscovered <N> employee records\nData retrieval and import complete\n\n# Verify SQL import:\nSELECT COUNT(*) FROM dbo.UltiProEmployees;\nSELECT COUNT(*) FROM dbo.ADDistinguishedNames;\nSELECT TOP 10 * FROM dbo.vw_EmployeeSync;" },
+      { label: "Spot-check manager DNs", cmd: "SELECT \n    employeeID, \n    givenName + ' ' + lastName AS Name,\n    ManagerEmployeeID,\n    ManagerDN\nFROM dbo.vw_EmployeeSync\nWHERE ManagerDN IS NOT NULL\nORDER BY NEWID() -- random sample" }
+    ],
+    note: "First run: 5-10 minutes for 1000+ employees (vs 20-30min for REST API). The speed difference is session-based streaming — no per-employee API calls."
+  },
+  {
+    lane: 1,
+    label: "Schedule Recurrence",
+    eyebrow: "Step 09 · Automation",
+    owner: "Infrastructure",
+    title: "Set up recurring schedule",
+    desc: "Link a schedule to the runbook. Every 4 hours is typical — HR data doesn't change that often, and RaaS is fast enough to run more frequently if needed.",
+    code: [
+      { label: "Create schedule", cmd: "# In Azure Portal:\nAutomation Account → Schedules → Add a schedule\n\nName: UltiPro-RaaS-Sync-Every4Hours\nStarts: <today> 06:00 AM\nRecurrence: Recurring\nRecur every: 4 Hours\nSet expiration: No\n\n# Link to runbook:\nRunbooks → Sync-UltiProToAD-RaaS-SQL → Schedules → Link a schedule\n→ Select: UltiPro-RaaS-Sync-Every4Hours\n→ Run on: <your Hybrid Worker group>" }
+    ],
+    images: [
+      { src: "../08-UltiPro/images/Runbook_Schedule.png", caption: "Recurring schedule configured to run every 4 hours on Hybrid Worker" }
+    ],
+    note: "Monitor the first few scheduled runs. If the SQL import fails mid-stream, check that the table types match the script's DataTable columns exactly — typos in column names break the bulk insert."
+  }
+];
+
+let current = 0;
+
+function render() {
+  const workflow = document.getElementById('workflow');
+  const panel = document.getElementById('panel');
+  const progress = document.getElementById('progress');
+
+  workflow.innerHTML = '';
+  progress.innerHTML = '';
+
+  // Lane labels
+  const label1 = document.createElement('div');
+  label1.className = 'lane-label lane-1-label';
+  label1.textContent = 'Infrastructure';
+  workflow.appendChild(label1);
+
+  const label2 = document.createElement('div');
+  label2.className = 'lane-label lane-2-label';
+  label2.textContent = 'HR Admin';
+  workflow.appendChild(label2);
+
+  // Step cells
+  steps.forEach((step, i) => {
+    const col = i + 2;
+
+    const cell1 = document.createElement('div');
+    cell1.className = 'step-cell lane-1-cell';
+    cell1.style.gridColumn = col;
+
+    const cell2 = document.createElement('div');
+    cell2.className = 'step-cell lane-2-cell';
+    cell2.style.gridColumn = col;
+
+    if (step.lane === 1) {
+      cell1.appendChild(makeCard(step, i));
+      cell2.className += ' empty-cell';
+      if (i > 0 && steps[i-1].lane === 2) {
+        const arrow = document.createElement('div');
+        arrow.className = 'handoff';
+        arrow.textContent = '↑';
+        cell1.appendChild(arrow);
+      }
+    } else {
+      cell2.appendChild(makeCard(step, i));
+      cell1.className += ' empty-cell';
+      if (i > 0 && steps[i-1].lane === 1) {
+        const arrow = document.createElement('div');
+        arrow.className = 'handoff';
+        arrow.textContent = '↓';
+        cell1.appendChild(arrow);
+      }
+    }
+
+    workflow.appendChild(cell1);
+    workflow.appendChild(cell2);
+
+    const dot = document.createElement('div');
+    dot.className = 'progress-dot' + (i <= current ? ' active' : '');
+    progress.appendChild(dot);
+  });
+
+  // Detail panel
+  const s = steps[current];
+  let html = `
+    <div class="panel-eyebrow">${s.eyebrow}<span class="owner-badge owner-${s.owner.toLowerCase().replace(' ', '-')}">${s.owner.toUpperCase()}</span></div>
+    <div class="panel-title">${s.title}</div>
+    <div class="panel-desc">${s.desc}</div>
+  `;
+
+  if (s.list) {
+    html += '<ul class="step-list">' + s.list.map(item => `<li>${item}</li>`).join('') + '</ul>';
+  }
+
+  if (s.images) {
+    s.images.forEach(img => {
+      html += `
+        <div class="step-image">
+          <img src="${img.src}" alt="${img.caption}">
+          <div class="image-caption">${img.caption}</div>
+        </div>
+      `;
+    });
+  }
+
+  if (s.code) {
+    s.code.forEach((c, idx) => {
+      html += `
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">${c.label}</span>
+            <button class="copy-btn" data-idx="${idx}">Copy</button>
+          </div>
+          <pre>${escapeHtml(c.cmd)}</pre>
+        </div>
+      `;
+    });
+  }
+
+  if (s.note) {
+    html += `<div class="note">${s.note}</div>`;
+  }
+
+  html += `
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prevBtn" ${current === 0 ? 'disabled' : ''}>← Previous</button>
+      <button class="nav-btn" id="nextBtn" ${current === steps.length - 1 ? 'disabled' : ''}>Next →</button>
+    </div>
+  `;
+
+  panel.innerHTML = html;
+
+  document.getElementById('prevBtn').onclick = () => { if (current > 0) { current--; render(); } };
+  document.getElementById('nextBtn').onclick = () => { if (current < steps.length - 1) { current++; render(); } };
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.onclick = () => {
+      const idx = btn.getAttribute('data-idx');
+      const text = s.code[idx].cmd;
+      copyToClipboard(text, btn);
+    };
+  });
+}
+
+function makeCard(step, i) {
+  const card = document.createElement('div');
+  card.className = 'step-card';
+  if (i === current) card.classList.add('active');
+  if (i < current) card.classList.add('done');
+
+  card.innerHTML = `
+    <div class="step-num">${i < current ? '✓ DONE' : 'STEP ' + String(i+1).padStart(2,'0')}</div>
+    <div class="step-title">${step.label}</div>
+  `;
+
+  card.onclick = () => { current = i; render(); };
+  return card;
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function copyToClipboard(text, btn) {
+  const done = () => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  };
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallback(text, done));
+  } else {
+    fallback(text, done);
+  }
+}
+
+function fallback(text, callback) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.top = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+  callback();
+}
+
+render();
+</script>
+</body>
+</html>
