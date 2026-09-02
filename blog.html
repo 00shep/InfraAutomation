@@ -115,31 +115,33 @@ nav a:hover {
   color: white;
 }
 
-/* Page Header */
-.page-header {
-  padding: 80px 0 40px;
-  text-align: center;
+/* Breadcrumb */
+.breadcrumb {
+  padding: 24px 0 32px;
 }
 
-.page-header h1 {
-  font-family: 'Outfit', sans-serif;
-  font-size: 48px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  letter-spacing: -0.02em;
-}
-
-.page-header p {
+.breadcrumb-nav {
+  font-size: 14px;
   color: var(--text-secondary);
-  font-size: 18px;
-  max-width: 720px;
-  margin: 0 auto;
+}
+
+.breadcrumb-nav a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.breadcrumb-nav a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-nav span {
+  margin: 0 8px;
+  color: var(--text-secondary);
 }
 
 /* Portfolio Section */
 .portfolio {
-  padding: 40px 0 80px;
+  padding: 0 0 80px;
 }
 
 .portfolio-grid {
@@ -227,10 +229,6 @@ footer a:hover {
     gap: 20px;
   }
 
-  .page-header h1 {
-    font-size: 36px;
-  }
-
   .portfolio-grid {
     grid-template-columns: 1fr;
   }
@@ -253,13 +251,13 @@ footer a:hover {
 </header>
 
 <main>
-  <div class="page-header">
+  <div class="breadcrumb">
     <div class="container">
-      <h1>Articles & Implementation Guides</h1>
-      <p>
-        Production-tested scripts and automation frameworks used across enterprise environments.
-        Each piece represents proven solutions to common infrastructure problems.
-      </p>
+      <div class="breadcrumb-nav">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Articles</span>
+      </div>
     </div>
   </div>
 
