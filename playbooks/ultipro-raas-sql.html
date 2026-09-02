@@ -17,6 +17,7 @@
   --border: #E1E4E8;
   --card-bg: #FFFFFF;
   --code-bg: #F5F7FA;
+  --success: #22C55E;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,6 +31,7 @@
     --border: #2A3441;
     --card-bg: #1A2332;
     --code-bg: #0A0E13;
+    --success: #4ADE80;
   }
 }
 
@@ -43,6 +45,7 @@
   --border: #2A3441;
   --card-bg: #1A2332;
   --code-bg: #0A0E13;
+  --success: #4ADE80;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -236,6 +239,7 @@ h1 {
 }
 
 .step-card.active .step-num { color: var(--accent); }
+.step-card.done .step-num { color: var(--success); }
 
 .step-title {
   font-size: 13px;
