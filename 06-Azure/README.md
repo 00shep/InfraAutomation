@@ -56,6 +56,21 @@ $ConfigServer = "ConfigSvr01"
 **Output:**  
 Grid view showing all protected VMs with their recovery plan assignments. VMs without a recovery plan will have blank RecoveryPlan and Group fields.
 
+![ASR Script Execution](images/Audit-TS-1.png)
+*Script connecting to Azure Site Recovery vault*
+
+![Recovery Plan Discovery](images/Audit-TS-2.png)
+*Enumerating recovery plans and protected items*
+
+![Gap Analysis](images/Audit-TS-3.png)
+*Identifying VMs missing recovery plan assignments*
+
+![Coverage Report](images/Audit-TS-4.png)
+*Complete ASR coverage report*
+
+![Recovery Plan Details](images/Audit-TS-5.png)
+*Detailed recovery plan group assignments*
+
 ### Technical Notes
 
 **GUID Complexity:**  

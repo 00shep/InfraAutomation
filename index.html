@@ -60,8 +60,12 @@ body {
 
 /* Header */
 header {
+  position: sticky;
+  top: 0;
   padding: 32px 0;
   border-bottom: 1px solid var(--border);
+  background: var(--ground);
+  z-index: 100;
 }
 
 .header-content {
@@ -253,85 +257,6 @@ nav a:hover {
   color: var(--accent);
 }
 
-/* Portfolio Section */
-.portfolio {
-  padding: 80px 0;
-}
-
-.portfolio h2 {
-  font-family: 'Outfit', sans-serif;
-  font-size: 42px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  letter-spacing: -0.02em;
-}
-
-.portfolio-intro {
-  color: var(--text-secondary);
-  font-size: 18px;
-  margin-bottom: 48px;
-  max-width: 720px;
-}
-
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 24px;
-}
-
-.portfolio-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 28px;
-  background: var(--card-bg);
-  text-decoration: none;
-  display: block;
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.portfolio-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-}
-
-.portfolio-tag {
-  display: inline-block;
-  background: var(--accent-pale);
-  color: var(--accent);
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.portfolio-card h3 {
-  font-family: 'Outfit', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  letter-spacing: -0.01em;
-}
-
-.portfolio-card p {
-  color: var(--text-secondary);
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.portfolio-meta {
-  display: flex;
-  gap: 16px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  font-size: 14px;
-  color: var(--text-secondary);
-  font-variant-numeric: tabular-nums;
-}
-
 /* Contact Section */
 .contact {
   padding: 80px 0 120px;
@@ -404,13 +329,8 @@ footer a:hover {
   }
 
   .expertise h2,
-  .portfolio h2,
   .contact h2 {
     font-size: 32px;
-  }
-
-  .portfolio-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -420,8 +340,9 @@ footer a:hover {
     <div class="header-content">
       <a href="#" class="logo">00Shep</a>
       <nav>
+        <a href="index.html">Home</a>
         <a href="#expertise">Expertise</a>
-        <a href="#portfolio">Portfolio</a>
+        <a href="blog.html">Articles</a>
         <a href="https://github.com/00shep/InfraAutomation">GitHub</a>
         <a href="#contact" class="cta-button">Get in Touch</a>
       </nav>
@@ -440,7 +361,7 @@ footer a:hover {
       </p>
       <div class="hero-cta">
         <a href="#contact" class="primary-btn">Discuss Your Project</a>
-        <a href="#portfolio" class="secondary-btn">View Case Studies</a>
+        <a href="blog.html" class="secondary-btn">Read Articles</a>
       </div>
     </div>
   </section>
@@ -491,102 +412,6 @@ footer a:hover {
             <li>RBAC and conditional access policies</li>
           </ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="portfolio" id="portfolio">
-    <div class="container">
-      <div class="section-title">Portfolio</div>
-      <h2>Real-world solutions for complex infrastructure challenges</h2>
-      <p class="portfolio-intro">
-        Production-tested scripts and automation frameworks used across enterprise environments.
-        Each piece represents proven solutions to common infrastructure problems.
-      </p>
-      <div class="portfolio-grid">
-        <a href="https://github.com/00shep/InfraAutomation/tree/main/08-UltiPro" class="portfolio-card">
-          <span class="portfolio-tag">Integration</span>
-          <h3>UKG Pro HR-to-AD Sync</h3>
-          <p>
-            Two-method approach (REST API and Report-as-a-Service) for syncing employee data from
-            UKG Pro to Active Directory. Includes OAuth 2.0 migration guide.
-          </p>
-          <div class="portfolio-meta">
-            <span>PowerShell</span>
-            <span>•</span>
-            <span>Azure Automation</span>
-          </div>
-        </a>
-
-        <a href="https://github.com/00shep/InfraAutomation/tree/main/01-ActiveDirectory" class="portfolio-card">
-          <span class="portfolio-tag">Active Directory</span>
-          <h3>Bulk AD Operations Suite</h3>
-          <p>
-            Seven PowerShell operations for managing Active Directory at scale: home folders,
-            logon scripts, UPN migrations, and LDAP queries with recursive group checking.
-          </p>
-          <div class="portfolio-meta">
-            <span>PowerShell</span>
-            <span>•</span>
-            <span>7 Scripts</span>
-          </div>
-        </a>
-
-        <a href="https://github.com/00shep/InfraAutomation/tree/main/06-Azure" class="portfolio-card">
-          <span class="portfolio-tag">Azure</span>
-          <h3>ASR Recovery Plan Audit</h3>
-          <p>
-            Azure Site Recovery script that identifies replicated items missing recovery plan
-            assignments. Handles complex GUID mapping between protected items and plans.
-          </p>
-          <div class="portfolio-meta">
-            <span>PowerShell</span>
-            <span>•</span>
-            <span>Az.RecoveryServices</span>
-          </div>
-        </a>
-
-        <a href="https://github.com/00shep/InfraAutomation/tree/main/07-GroupPolicy" class="portfolio-card">
-          <span class="portfolio-tag">Group Policy</span>
-          <h3>GPO Auditing & Cleanup</h3>
-          <p>
-            Find unlinked GPOs and policies with disabled links for cleanup and troubleshooting.
-            Parse XML reports to identify configuration drift.
-          </p>
-          <div class="portfolio-meta">
-            <span>PowerShell</span>
-            <span>•</span>
-            <span>2 Scripts</span>
-          </div>
-        </a>
-
-        <a href="https://github.com/00shep/InfraAutomation/tree/main/04-SCCM" class="portfolio-card">
-          <span class="portfolio-tag">Compliance</span>
-          <h3>Bitlocker Compliance Monitoring</h3>
-          <p>
-            SCCM compliance item for pre-Windows 10 clients. Verifies Bitlocker status and
-            AES 256 encryption method via WMI queries.
-          </p>
-          <div class="portfolio-meta">
-            <span>PowerShell</span>
-            <span>•</span>
-            <span>SCCM</span>
-          </div>
-        </a>
-
-        <a href="https://github.com/00shep/InfraAutomation/tree/main/03-SCOM" class="portfolio-card">
-          <span class="portfolio-tag">Troubleshooting</span>
-          <h3>SCOM fSMORoleOwner Fix</h3>
-          <p>
-            Complete guide for resolving Active Directory fSMORoleOwner inconsistencies detected
-            by SCOM. Includes checklist and metadata cleanup procedures.
-          </p>
-          <div class="portfolio-meta">
-            <span>SCOM</span>
-            <span>•</span>
-            <span>Active Directory</span>
-          </div>
-        </a>
       </div>
     </div>
   </section>
