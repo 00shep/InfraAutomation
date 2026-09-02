@@ -266,17 +266,31 @@ footer a:hover {
   <section class="portfolio">
     <div class="container">
       <div class="portfolio-grid">
-        <a href="https://github.com/00shep/InfraAutomation/tree/main/08-UltiPro" class="portfolio-card">
+        <a href="playbooks/ultipro-rest-api.html" class="portfolio-card">
           <span class="portfolio-tag">Integration</span>
-          <h3>UKG Pro HR-to-AD Sync</h3>
+          <h3>UKG Pro Sync — REST API Method</h3>
           <p>
-            Two-method approach (REST API and Report-as-a-Service) for syncing employee data from
-            UKG Pro to Active Directory. Includes OAuth 2.0 migration guide.
+            Sync employee data from UKG Pro to Active Directory using REST APIs and CSV export.
+            8-step workflow with OAuth 2.0 authentication and Azure Automation.
           </p>
           <div class="portfolio-meta">
             <span>PowerShell</span>
             <span>•</span>
-            <span>Azure Automation</span>
+            <span>8 Steps</span>
+          </div>
+        </a>
+
+        <a href="playbooks/ultipro-raas-sql.html" class="portfolio-card">
+          <span class="portfolio-tag">Integration</span>
+          <h3>UKG Pro Sync — RaaS + SQL Method</h3>
+          <p>
+            Faster alternative using Report-as-a-Service SOAP API with direct SQL Server import.
+            9-step workflow, 5-10min runtime vs 20-30min REST method.
+          </p>
+          <div class="portfolio-meta">
+            <span>PowerShell</span>
+            <span>•</span>
+            <span>9 Steps</span>
           </div>
         </a>
 
