@@ -50,6 +50,12 @@ UKG Pro APIs → PowerShell → CSV Export → ManageEngine ADManager → Active
 | Employee Changes | `/personnel/v1/employee-changes/{employeeId}` | Names, addresses, phone numbers |
 | Org Levels | `/configuration/v1/org-levels` | Department names and codes |
 
+![UltiPro API Navigation](images/UltiPro_API_Navigation.png)
+*UKG Pro API configuration interface*
+
+![UltiPro API Navigation 2](images/UltiPro_API_Navigation2.png)
+*API credential management*
+
 ### What the Script Does
 
 1. **Query Employment Details** - Fetches all active employees (200 per page due to API limits)
@@ -81,6 +87,18 @@ UKG Pro APIs → PowerShell → CSV Export → ManageEngine ADManager → Active
 $exportpath = "\\fileserver\share\UltiPro-User-Data"
 $headers = @{'us-customer-api-key' = 'YOUR-API-KEY'}
 ```
+
+![Azure Automation Credential](images/Automation_Credential.png)
+*Azure Automation credential configuration*
+
+![PowerShell Runbook](images/PowerShell_Runbook.png)
+*PowerShell runbook setup*
+
+![Runbook Schedule](images/Runbook_Schedule.png)
+*Scheduling the sync runbook*
+
+![ManageEngine Integration](images/ManageEngine_Automation.png)
+*ManageEngine ADManager automation workflow*
 
 **⚠️ Authentication Update Required:**
 

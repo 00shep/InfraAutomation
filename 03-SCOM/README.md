@@ -42,7 +42,13 @@ Add these namespaces to ADSI Edit:
 2. **DC=DomainDNSZones,DC=MyDOMAIN,DC=COM**
 3. **DC=ForestDNSZones,DC=MyDOMAIN,DC=COM**
 
+![ADSI Edit Namespaces](images/fSMO1.png)
+*ADSI Edit with DNS zone namespaces configured*
+
 The fix: Copy the settings from the **distinguishedName** attribute under **Configuration** in ADSI Edit for the correct **fSMORoleOwner**. Update the owner attribute under **DomainDNSZones** and **ForestDNSZones**.
+
+![fSMORoleOwner Attribute](images/fSMO2.png)
+*Viewing and updating the fSMORoleOwner attribute*
 
 ### The Gotchas
 

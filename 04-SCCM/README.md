@@ -49,23 +49,38 @@ This compliance item queries for Bitlocker status on pre-Windows 10 clients.
    - Type: Script
    - Name: Bitlocker Status Check
 
+![Configuration Item Setup](images/BitlockerCI-Compliance-1.png)
+*Creating the configuration item*
+
 2. **Configure the Discovery Script**
    - Script type: PowerShell
    - Add the script content from [`Get-BitlockerComplianceStatus.ps1`](./Get-BitlockerComplianceStatus.ps1)
+
+![Discovery Script](images/BitlockerCI-Compliance-2.png)
+*PowerShell discovery script configuration*
 
 3. **Configure Compliance Rules**
    - Rule type: Value
    - Data type: String
    - Equals: "Compliant"
 
+![Compliance Rules](images/BitlockerCI-Compliance-3.png)
+*Defining compliance rules*
+
 4. **Deploy to a Collection**
    - Create a Configuration Baseline
    - Add the Configuration Item
    - Deploy to your target collection
 
+![Deployment](images/BitlockerCI-Compliance-4.png)
+*Configuration baseline deployment*
+
 5. **Monitor Compliance**
    - View deployment status under Monitoring > Deployments
    - View individual client reports in the Compliance Details
+
+![Compliance Report](images/BitlockerCI-Compliance-5.png)
+*Viewing compliance status across clients*
 
 ### Troubleshooting
 
